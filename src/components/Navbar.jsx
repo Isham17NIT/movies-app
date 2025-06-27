@@ -1,9 +1,13 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import { AppBar,Box,Toolbar,Typography,InputBase } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux'
 
 import SearchIcon from '@mui/icons-material/Search';
+import {LightMode,DarkMode} from '@mui/icons-material';
+
 import SelectorComponent from './SelectorComponent';
+import { toggleTheme } from '../slices/darkModeSlice';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -48,21 +52,24 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Navbar() {
     const [genre, setGenre] = React.useState('');
     const handleGenre = (e) => {
-        setGenre(e.target.value);
+      setGenre(e.target.value);
     };
 
     const [rating, setRating] = React.useState('');
     const handleRating = (e) => {
-        setRating(e.target.value);
+      setRating(e.target.value);
     };
 
     const genreItems = ['Comedy','Action','Horror','Drama','Romance','Fantasy','Sci-Fiction','Mystery','Adventure'];
-    const ratingItems = [1,2,3,4,5]
+    const ratingItems = [1,2,3,4,5,6,7,8,9]
+
+    const dispatch = useDispatch();
+    const isDark = useSelector((state)=>state.theme.isDark)
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-            <Toolbar>
+        <AppBar position="fixed">
+            <Toolbar sx={{ minHeight: 80 }}>
                 <Typography
                     variant="h6"
                     noWrap
@@ -75,15 +82,20 @@ export default function Navbar() {
                     <SearchIconWrapper>
                     <SearchIcon />
                     </SearchIconWrapper>
-                    <StyledInputBase
+                    <StyledInputBase onChange={(e)=>console.log(e.target.value)}
                     placeholder="Search…"
                     inputProps={{ 'aria-label': 'search' }}
                     />
                 </Search>
                 <Box sx={{ flexGrow: 1 }} />
-                <Box sx={{display:'flex', gap:2}}>
-                  <SelectorComponent handleChange={handleGenre} text="Genre" title="genre" menuItems={genreItems}/>
-                  <SelectorComponent handleChange={handleRating} text="Rating" title="rating" menuItems={ratingItems}/>
+                <Box sx={{display:'flex', gap:2, alignContent:'center'}}>
+                  <SelectorComponent handleChange={handleGenre} val={genre} title="genre" menuItems={genreItems}/>
+                  <SelectorComponent handleChange={handleRating} val={rating} title="rating" menuItems={ratingItems}/>
+                  <div onClick={()=>dispatch(toggleTheme())}>
+                    {
+                      isDark ? <DarkMode/> : <LightMode/>
+                    }
+                  </div>
                 </Box>
                 
             </Toolbar>
