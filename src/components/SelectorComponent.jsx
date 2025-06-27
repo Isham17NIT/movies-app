@@ -1,25 +1,44 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import {AppBar,Box,InputLabel,FormControl,Select,MenuItem} from '@mui/material';
 const SelectorComponent = (props)=>{
     return (
-        // <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
         <Box sx={{ minWidth: 120 }}>
-            <FormControl fullWidth size="small">
-                <InputLabel id="demo-simple-select-autowidth-label">{props.text}</InputLabel>
+            <FormControl fullWidth size="small" sx={{
+                    '& .MuiOutlinedInput-root': {
+                    color: 'white',
+                    '& fieldset': {
+                        borderColor: 'white',
+                    },
+                    '&:hover fieldset': {
+                        borderColor: 'white',
+                    },
+                    '&.Mui-focused fieldset': {
+                        borderColor: 'white',
+                    },
+                    },
+                    '& .MuiInputLabel-root': {
+                    color: 'white',
+                    },
+                    '& .MuiInputLabel-root.Mui-focused': {
+                    color: 'white',
+                    },
+                    '& .MuiSelect-icon': {
+                    color: 'white',
+                    },
+                }}>
+                <InputLabel id="demo-simple-select-autowidth-label" sx={{ color: 'white' }}>{props.title}</InputLabel>
                 <Select labelId="demo-simple-select-autowidth-label"
                     id="demo-simple-select-autowidth"
-                    value={props.title}
-                    label={props.text}
-                    onChange={props.handleChange}>
+                    value={props.val}
+                    label={props.title}
+                    onChange={props.handleChange}
+                    sx={{ color: 'white' }}>
                     {
-                        props.menuItems.map((val,idx)=>{
+                        props.text==="genre" ? props.menuItems.map((val,idx)=>{
                             return <MenuItem key={idx} value={val}>{val}</MenuItem>
+                        }) :  props.menuItems.map((val,idx)=>{
+                            return <MenuItem key={idx} value={val}>{val}+</MenuItem>
                         })
                     }
                 </Select>
