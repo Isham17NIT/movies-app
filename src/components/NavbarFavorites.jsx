@@ -1,16 +1,12 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
-import { AppBar,Box,Toolbar,Typography,InputBase,Badge } from '@mui/material';
+import { AppBar,Box,Toolbar,Typography,InputBase,Badge,IconButton } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 
-import SearchIcon from '@mui/icons-material/Search';
-import {LightMode,DarkMode} from '@mui/icons-material';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-
-import SelectorComponent from './SelectorComponent';
+import {LightMode,DarkMode } from '@mui/icons-material';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { toggleTheme } from '../slices/darkModeSlice';
-import { setSearch } from '../slices/movieSlice';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -52,22 +48,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Navbar() {
+export default function NavbarFavorites() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const [genre, setGenre] = React.useState('');
-    const handleGenre = (e) => {
-      setGenre(e.target.value);
-    };
-
-    const [rating, setRating] = React.useState('');
-    const handleRating = (e) => {
-      setRating(e.target.value);
-    };
-
-    const genreItems = ['Comedy','Action','Horror','Drama','Romance','Fantasy','Sci-Fiction','Mystery','Adventure'];
-    const ratingItems = [1,2,3,4,5,6,7,8,9]
 
     const isDark = useSelector((state)=>state.theme.isDark)
     const favorites = useSelector((state)=>state.movies.favorites)
@@ -80,35 +63,22 @@ export default function Navbar() {
                     variant="h6"
                     noWrap
                     component="div"
-                    sx={{ display: { xs: 'none', sm: 'block' } }}
                 >
-                    Movies App
+                    My Favorites
                 </Typography>
-                <Search>
-                    <SearchIconWrapper>
-                    <SearchIcon />
-                    </SearchIconWrapper>
-                    <StyledInputBase onChange={(e)=>dispatch(setSearch(e.target.value))}
-                    placeholder="Search…"
-                    inputProps={{ 'aria-label': 'search' }}
-                    />
-                </Search>
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{display:'flex', gap:1, alignContent:'center'}}>
-                  <SelectorComponent handleChange={handleGenre} val={genre} title="genre" menuItems={genreItems}/>
-                  <SelectorComponent handleChange={handleRating} val={rating} title="rating" menuItems={ratingItems}/>
                   <div onClick={()=>dispatch(toggleTheme())}>
                     {
                       isDark ? <DarkMode className="mt-2"/> : <LightMode className="mt-2"/>
                     }
                   </div>
-                  <div onClick={() => navigate('/favorites')}>
-                      <Badge badgeContent={favorites? favorites.length : 0} color="primary" className="mt-2">
-                        <FavoriteBorderIcon/>
-                      </Badge>
+                  <div onClick={() => navigate('/')}>
+                        <IconButton color="inherit">
+                            <ArrowBackIosNewIcon style={{ color: "#fff" }} />
+                        </IconButton>
                   </div>
                 </Box>
-                
             </Toolbar>
         </AppBar>
     </Box>
