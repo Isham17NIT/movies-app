@@ -8,6 +8,7 @@ import {LightMode,DarkMode} from '@mui/icons-material';
 
 import SelectorComponent from './SelectorComponent';
 import { toggleTheme } from '../slices/darkModeSlice';
+import { setSearch } from '../slices/movieSlice';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -50,6 +51,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
+    const dispatch = useDispatch();
+
     const [genre, setGenre] = React.useState('');
     const handleGenre = (e) => {
       setGenre(e.target.value);
@@ -63,7 +66,6 @@ export default function Navbar() {
     const genreItems = ['Comedy','Action','Horror','Drama','Romance','Fantasy','Sci-Fiction','Mystery','Adventure'];
     const ratingItems = [1,2,3,4,5,6,7,8,9]
 
-    const dispatch = useDispatch();
     const isDark = useSelector((state)=>state.theme.isDark)
 
   return (
@@ -82,7 +84,7 @@ export default function Navbar() {
                     <SearchIconWrapper>
                     <SearchIcon />
                     </SearchIconWrapper>
-                    <StyledInputBase onChange={(e)=>console.log(e.target.value)}
+                    <StyledInputBase onChange={(e)=>dispatch(setSearch(e.target.value))}
                     placeholder="Search…"
                     inputProps={{ 'aria-label': 'search' }}
                     />

@@ -9,7 +9,9 @@ export const getMovies = () => async (dispatch) => {
       // 'x-rapidapi-host': 'imdb236.p.rapidapi.com' // tells RapidAPI which API you want to communicate with.
       // 'x-rapidapi-key': 'f2e6ba4bbemsh8f22a1f8e5bacdcp105b7cjsn516916dfa671',
 		  // 'x-rapidapi-host': 'imdb236.p.rapidapi.com'
-      'x-rapidapi-key': '1b5cf58209mshd403c95cf0087fcp1af737jsn81e8296321ee',
+      // 'x-rapidapi-key': '1b5cf58209mshd403c95cf0087fcp1af737jsn81e8296321ee',
+		  // 'x-rapidapi-host': 'imdb236.p.rapidapi.com'
+      'x-rapidapi-key': '02dd2e85demsh39ff78652665901p19c109jsne5d853485489',
 		  'x-rapidapi-host': 'imdb236.p.rapidapi.com'
     }
   };

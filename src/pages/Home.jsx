@@ -3,25 +3,25 @@ import Navbar from "../components/Navbar"
 import { useDispatch, useSelector } from "react-redux";
 import { getMovies } from "../api/movies";
 import MovieCard from "../components/MovieCard";
+import getMoviesBySearch from '../utils/getMoviesBySearch'
 const Home = ()=>{
     const dispatch = useDispatch();
-    const { movies } = useSelector(state=>state.movies)
-    console.log(movies)
+    const { movies, searchValue } = useSelector(state=>state.movies)
+    
     useEffect(()=>{
         dispatch(getMovies())
     },[])
-    const favorites = useSelector(state => state.movies.favorites);
-    useEffect(() => {
-    console.log('Favorites:', favorites);
-    }, [favorites]);
+
+    const filterByMovieName = getMoviesBySearch(movies,searchValue)
+
     return (
         <>
             <Navbar/>
             <div className="flex flex-wrap items-center gap-4 justify-center mt-20">
                 {
-                    movies.length>0 && movies.map((movie)=>{
+                    filterByMovieName.length>0 ? filterByMovieName.map((movie)=>{
                         return <MovieCard key={movie.id} movie={movie}/>
-                    })
+                    }) : <h2>No movies found</h2>
                 }
             </div>
         </>
