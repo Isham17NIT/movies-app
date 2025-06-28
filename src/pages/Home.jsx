@@ -10,6 +10,10 @@ const Home = ()=>{
     useEffect(()=>{
         dispatch(getMovies())
     },[])
+    const favorites = useSelector(state => state.movies.favorites);
+    useEffect(() => {
+    console.log('Favorites:', favorites);
+    }, [favorites]);
     return (
         <>
             <Navbar/>

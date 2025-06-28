@@ -6,10 +6,16 @@ import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleFavorites } from '../slices/movieSlice';
 
 export default function MovieCard(props) {
+
+  const dispatch = useDispatch();
   const { primaryImage, primaryTitle, averageRating, trailer, description, runtimeMinutes } = props.movie
-  const [fav, setFav] = React.useState(false);
+
+  const favorites = useSelector(state=>state.movies.favorites)
+
   return (
     <Card sx={{ width: 345, height: 420, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
       <CardMedia
@@ -48,27 +54,27 @@ export default function MovieCard(props) {
             justifyContent: 'space-between',
             alignItems: 'center',
             marginBottom: '0.5rem',
-            paddingRight: '0.2rem',
-            paddingLeft: '0.2rem',
+            paddingRight: '0.15rem',
+            paddingLeft: '0.1rem',
             flexWrap: 'wrap',  // Optional if mobile responsiveness needed
             gap: '12px'        // Add spacing between icons
             }}>
             <IconButton aria-label="add to favorites"
-                onClick={() => setFav((prev) => !prev)}
+                onClick={()=>dispatch(toggleFavorites(props.movie))}
             >
-                <FavoriteIcon color={fav ? "error" : "action"} />
+              <FavoriteIcon color={favorites.find(m=>m.id===props.movie.id) ? "error" : "action"} />
             </IconButton>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1px' }}>
                 <StarIcon fontSize="small" style={{ color: '#1976d2' }} />
                 <span>{averageRating}/10</span>
             </div>
             
-            <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1px' }}>
                 <AccessTimeIcon fontSize="small" style={{ color: '#1976d2' }} />
                 <span>{runtimeMinutes} min</span>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1px' }}>
                 <PlayCircleIcon fontSize="small" style={{ color: '#1976d2' }} />
                 <Link to={trailer} style={{ color: '#1976d2', textDecoration: 'none' }}>Watch Trailer</Link>
             </div>
