@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     movies: [],
-    favorites: []
+    favorites: [],
+    searchValue: ''
 }
 const movieSlice = createSlice({
     name:'movies',
@@ -16,9 +17,11 @@ const movieSlice = createSlice({
                 state.favorites = state.favorites.filter(movie=>movie.id!==action.payload.id)
             else    
                 state.favorites.push(action.payload)
-            console.log(state.favorites)
+        },
+        setSearch: (state,action)=>{
+            state.searchValue = action.payload
         }
     }
 })
-export const { setMovies, toggleFavorites }=movieSlice.actions;
+export const { setMovies, toggleFavorites, setSearch }=movieSlice.actions;
 export default movieSlice.reducer
