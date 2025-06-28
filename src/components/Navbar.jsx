@@ -88,12 +88,12 @@ export default function Navbar() {
                     />
                 </Search>
                 <Box sx={{ flexGrow: 1 }} />
-                <Box sx={{display:'flex', gap:2, alignContent:'center'}}>
+                <Box sx={{display:'flex', gap:1, alignContent:'center'}}>
                   <SelectorComponent handleChange={handleGenre} val={genre} title="genre" menuItems={genreItems}/>
                   <SelectorComponent handleChange={handleRating} val={rating} title="rating" menuItems={ratingItems}/>
                   <div onClick={()=>dispatch(toggleTheme())}>
                     {
-                      isDark ? <DarkMode/> : <LightMode/>
+                      isDark ? <DarkMode className="mt-2"/> : <LightMode className="mt-2"/>
                     }
                   </div>
                 </Box>
